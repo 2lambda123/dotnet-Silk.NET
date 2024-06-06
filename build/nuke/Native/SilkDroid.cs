@@ -36,6 +36,12 @@ partial class Build {
                 return AndroidHomeValue;
             }
 
+            if (AndroidHomeOverride is not null)
+            {
+                AndroidHomeValue = AndroidHomeOverride;
+                return AndroidHomeValue;
+            }
+
             var utils = RootDirectory / "build" / "utilities";
             DotNet($"build \"{utils / "android_probe.proj"}\" /t:GetAndroidJar");
             AndroidHomeValue = (AbsolutePath) File.ReadAllText(utils / "android.jar.gen.txt") / ".." / ".." / "..";
@@ -87,7 +93,7 @@ partial class Build {
                         envVars["ANDROID_NDK_HOME"] = ndk;
                     }
 
-                    using var process = StartShell($".{Path.PathSeparator}gradlew build", silkDroid, envVars);
+                    using var process = StartShell($".{Path.DirectorySeparatorChar}gradlew build", silkDroid, envVars);
                     process.AssertZeroExitCode();
                     var ret = process.Output;
                     CopyFile
