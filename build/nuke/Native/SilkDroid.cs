@@ -36,10 +36,10 @@ partial class Build {
                 return AndroidHomeValue;
             }
 
-            if (AndroidHomeOverride is not null)
+            if ((Environment.GetEnvironmentVariable("ANDROID_HOME") ?? Environment.GetEnvironmentVariable("ANDROID_SDK_ROOT")) is {} sdk)
             {
-                AndroidHomeValue = AndroidHomeOverride;
-                return AndroidHomeValue;
+                AndroidHomeValue = sdk;
+                return sdk;
             }
 
             var utils = RootDirectory / "build" / "utilities";
@@ -86,6 +86,7 @@ partial class Build {
 
                     var envVars = CreateEnvVarDictionary();
                     envVars["ANDROID_HOME"] = AndroidHome;
+                    envVars["ANDROID_SDK_ROOT"] = AndroidHome;
 
                     foreach (var ndk in Directory.GetDirectories((AbsolutePath) AndroidHome / "ndk")
                                  .OrderByDescending(x => Version.Parse(Path.GetFileName(x))))
