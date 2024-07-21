@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Silk.NET.SilkTouch.Clang;
 using Silk.NET.SilkTouch.Mods.Transformation;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
@@ -13,7 +14,7 @@ namespace Silk.NET.SilkTouch.Mods;
 /// <see cref="CSharpSyntaxRewriter"/> containing common functionality for mods.
 /// </summary>
 public abstract class ModCSharpSyntaxRewriter(bool visitIntoStructuredTrivia = false)
-    : CSharpSyntaxRewriter(visitIntoStructuredTrivia),
+    : ContextCSharpSyntaxRewriter(visitIntoStructuredTrivia),
         ITransformationContext
 {
     private ThreadLocal<Dictionary<string, UsingDirectiveSyntax>> _usingsToAdd =
@@ -144,4 +145,7 @@ public abstract class ModCSharpSyntaxRewriter(bool visitIntoStructuredTrivia = f
     /// <returns>The discriminator string.</returns>
     protected static string Discrim(UsingDirectiveSyntax use) =>
         new(use.WithoutTrivia().ToString().Where(char.IsAsciiLetterOrDigit).ToArray());
+
+    /// <inheritdoc/>
+    public override bool ShouldSkipFile(string fileName) => fileName.StartsWith("sources/");
 }
