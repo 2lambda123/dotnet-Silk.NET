@@ -1,0 +1,43 @@
+html[data-theme='light'],
+html[data-theme='light'] :root {
+  --ifm-color-primary: #7014eb;
+  --ifm-color-primary-dark: #6512d3;
+  --ifm-color-primary-darker: #5f11c8;
+  --ifm-color-primary-darkest: #4e0ea4;
+  --ifm-color-primary-light: #7e2ced;
+  --ifm-color-primary-lighter: #8537ee;
+  --ifm-color-primary-lightest: #9b5af1;
+
+  --ifm-background-color: #e5f9f0;
+  --ifm-background-surface-color: #D8DEE9;
+
+  --ifm-code-font-size: 95%;
+}
+
+html[data-theme='dark'],
+html[data-theme='dark'] :root {
+  --ifm-color-primary: #c8a5f7;
+  --ifm-color-primary-dark: #b17ff4;
+  --ifm-color-primary-darker: #9a59f0;
+  --ifm-color-primary-darkest: #8333ed;
+  --ifm-color-primary-light: #dfcbfa;
+  --ifm-color-primary-lighter: #f6f1fe;
+  --ifm-color-primary-lightest: #ffffff;
+  
+  --ifm-background-color: #3b4252;
+  --ifm-background-surface-color: #2E3440;
+
+  --ifm-code-font-size: 95%;
+}
+
+
+.docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+html[data-theme='dark'] .docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.3);
+}
